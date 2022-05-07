@@ -10,10 +10,18 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import configparser
+import os
 from pathlib import Path
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+config = configparser.ConfigParser()
+print('\n\n\n')
+config.read(os.path.join(BASE_DIR.parent, 'config.ini'))
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -38,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api.apps.ApiConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -74,14 +83,40 @@ WSGI_APPLICATION = 'server.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'djongo',
+#         'NAME': 'houses_data',
+#         'authMechanism': 'SCRAM-SHA-1',
+#         'HOST': 'mongodb+srv://Bonny:VThLjXsncC8lYmFc@cluster0.iwifn.mongodb.net/houses_data?retryWrites=true',
+#         'USER': 'Bonny',
+#         'PASSWORD': 'VThLjXsncC8lYmFc@cluster0',
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'default': {
+            'ENGINE': 'djongo',
+            'NAME': 'houses_data',
+            'ENFORCE_SCHEMA': False,
+            'CLIENT': {
+                'host': f'mongodb+srv://{config["MongoDB"]["username"]}:{config["MongoDB"]["password"]}@cluster0.iwifn.mongodb.net/houses_data?retryWrites=true',
+                'username': config["MongoDB"]["username"],
+                'password': config["MongoDB"]["password"],
+                # 'authSource': 'db-name',
+                'authMechanism': 'SCRAM-SHA-1'
+            },
+            'LOGGING': {
+                'version': 1,
+                'loggers': {
+                    'djongo': {
+                        'level': 'DEBUG',
+                        'propagate': False,
+                    }
+                },
+             },
+        }
     }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
