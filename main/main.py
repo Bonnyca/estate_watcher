@@ -4,8 +4,13 @@ import time
 from pymongo import MongoClient
 from datetime import datetime
 
+import configparser
+
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 class ZillowScraper:
+
     headers = {
         'accept': '*/*',
         'accept-encoding': 'gzip, deflate, br',
@@ -57,8 +62,9 @@ class ZillowScraper:
 
     def push_to_db(self, data):
         # pass
-        cluster = MongoClient(
-            'mongodb+srv://Bonny:VThLjXsncC8lYmFc@cluster0.iwifn.mongodb.net/houses_data?retryWrites=true&w=majority')
+        cluster = MongoClient('mongodb+srv://' + config['MongoDB']['key'])
+        print(cluster)
+
         db = cluster['houses_data']
         for doc in data:
             # print('trying to upsert...', doc)
@@ -138,8 +144,13 @@ class ZillowScraper:
 
 
 if __name__ == '__main__':
-    scraper = ZillowScraper()
-    scraper.run()
+    prin /t('mongodb+srv://'+config['MongoDB']['key'])
+
+    scraper = ZillowScraper().push_to_db([])
+
+
+    # scraper = ZillowScraper()
+    # scraper.run()
 
 # from bs4 import BeautifulSoup
 #
