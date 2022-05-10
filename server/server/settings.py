@@ -18,8 +18,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-config = configparser.ConfigParser()
-print('\n\n\n')
+config = configparser.RawConfigParser()
 config.read(os.path.join(BASE_DIR.parent, 'config.ini'))
 
 
@@ -28,7 +27,7 @@ config.read(os.path.join(BASE_DIR.parent, 'config.ini'))
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-w^+n5-sakwrfvil7x-3l0peyl2gpu&)6t#6__(%clh+2ynkf0s'
+SECRET_KEY = config['DJANGO']['SECRET']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -82,17 +81,6 @@ WSGI_APPLICATION = 'server.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'djongo',
-#         'NAME': 'houses_data',
-#         'authMechanism': 'SCRAM-SHA-1',
-#         'HOST': 'mongodb+srv://Bonny:VThLjXsncC8lYmFc@cluster0.iwifn.mongodb.net/houses_data?retryWrites=true',
-#         'USER': 'Bonny',
-#         'PASSWORD': 'VThLjXsncC8lYmFc@cluster0',
-#     }
-# }
 
 DATABASES = {
         'default': {
