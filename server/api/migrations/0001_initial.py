@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
                 ('creation_date', models.DateTimeField()),
             ],
             options={
-                'db_table': 'houses_coll',
+                'db_table': 'houses_coll_test',
             },
         ),
     ]
