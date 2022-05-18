@@ -4,7 +4,7 @@ from djongo import models
 
 class Sale(models.Model):
     address_city = models.CharField(max_length=150)
-    address_street = models.CharField(max_length=250)
+    address_street = models.CharField(max_length=255)
     date_sold = models.DateTimeField()
     address_state = models.CharField(max_length=3)
     address_zipcode = models.CharField(max_length=5)
@@ -15,6 +15,9 @@ class Sale(models.Model):
     lot_area = models.IntegerField()
     sold_price = models.IntegerField()
     creation_date = models.DateTimeField()
+
+    def __str__(self):
+        return self.address_street
 
     class Meta:
         db_table = 'houses_coll_test'
