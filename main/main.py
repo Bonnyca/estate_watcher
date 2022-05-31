@@ -63,7 +63,9 @@ class ZillowScraper:
     def push_to_db(self, data):
         cluster = MongoClient('mongodb+srv://' + config['MongoDB']['key'])
         db = cluster['houses_data']
+        # print('data', data)
         for doc in data:
+            # print(doc)
             resp = db.houses_coll.update_one(
                 {
                     'address_street': doc['address_street'],
@@ -87,8 +89,11 @@ class ZillowScraper:
         to_db = []
 
         raw_data = jdata['cat1']['searchResults']['listResults']
+
         for item in raw_data:
+            # print(item)
             if 'lotAreaValue' in item['hdpData']['homeInfo']:
+
                 house_item = {}
                 house_item['sold_price'] = item['unformattedPrice']
                 house_item['address_street'] = item['addressStreet']
@@ -99,12 +104,12 @@ class ZillowScraper:
                 house_item['baths'] = item['baths']
                 house_item['area'] = item['area']
                 house_item['home_type'] = item['hdpData']['homeInfo']['homeType']
-                house_item['date_sold'] = int(int(item['hdpData']['homeInfo']['dateSold']) / 1000)
+                house_item['date_sold'] = datetime.fromtimestamp(int(item['hdpData']['homeInfo']['dateSold']) // 1000)
                 house_item['lot_area'] = self.convert_lot_area_unit(
                     item['hdpData']['homeInfo']['lotAreaValue'],
                     item['hdpData']['homeInfo']['lotAreaUnit']
                 )
-                house_item['creation_date'] = int(round(datetime.now().timestamp()))
+                house_item['creation_date'] = datetime.now()
                 to_db.append(house_item)
 
         return to_db

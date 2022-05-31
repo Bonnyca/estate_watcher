@@ -1,8 +1,12 @@
 # from djongo.models.indexes import TextIndex
 from djongo import models
+from datetime import datetime
+
+from django.utils.timezone import make_aware
 
 
 class Sale(models.Model):
+    _id = models.ObjectIdField()
     address_city = models.CharField(max_length=150)
     address_street = models.CharField(max_length=255)
     date_sold = models.DateTimeField()
@@ -20,7 +24,7 @@ class Sale(models.Model):
         return self.address_street
 
     class Meta:
-        db_table = 'houses_coll_test'
+        db_table = 'houses_coll'
         indexes = [
             # TextIndex(fields=['name'])
         ]
