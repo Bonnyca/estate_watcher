@@ -1,0 +1,28 @@
+{
+  "name": "estatetracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "devStart": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bonnyca/estate_watcher.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bonnyca/estate_watcher/issues"
+  },
+  "homepage": "https://github.com/Bonnyca/estate_watcher#readme",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "node": "^19.6.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
+}

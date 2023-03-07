@@ -65,7 +65,7 @@ class ZillowScraper:
         db = cluster['houses_data']
         # print('data', data)
         for doc in data:
-            # print(doc)
+            print(doc)
             resp = db.houses_coll.update_one(
                 {
                     'address_street': doc['address_street'],
@@ -76,7 +76,7 @@ class ZillowScraper:
                 upsert=True,
             )
 
-        # print(resp)
+        print(resp, 'resp')
 
 
     def fetch(self, url, params):

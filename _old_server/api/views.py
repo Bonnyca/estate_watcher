@@ -1,13 +1,10 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from rest_framework import serializers
 import datetime
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, status
 from rest_framework.exceptions import ValidationError
-from rest_framework.response import Response
 from django.utils import timezone
-from .models import Sale
 from .serializers import SaleSerializer
+from .models import Sale
 
 
 
@@ -20,6 +17,7 @@ class SalesViewSet(viewsets.ModelViewSet):
         date_from = self.request.query_params.get('date_from')
         date_to = self.request.query_params.get('date_to')
         current_tz = timezone.get_current_timezone()
+        filter_median_price = (DjangoFilterBackend,)
 
         try:
             date_from = datetime.datetime.strptime(date_from, '%Y-%m-%d')

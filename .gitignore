@@ -4,6 +4,8 @@
 
 .idea/*
 config.ini
+**/node_modules/*
+
 
 
 #from gitignore.io
